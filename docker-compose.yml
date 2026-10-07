@@ -1,0 +1,38 @@
+services:
+  backend:
+    build: ./backend
+    container_name: nar-manager-backend
+    ports:
+      - "8000:8000"
+    env_file: .env
+    environment:
+      DATABASE_URL: sqlite:////app/data/nar_manager.db
+      NAR_DIRECTORY: /app/data/nar_files
+      BACKUP_DIRECTORY: /app/data/backup
+      LOG_FILE: /app/data/logs/nar-manager.log
+    user: root
+    volumes:
+      - ./nar-data:/app/data
+      - ./ssh-key:/home/narmgr/.ssh
+      - ./backend/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh:ro
+    entrypoint: ["/usr/local/bin/docker-entrypoint.sh"]
+    command: []
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: nar-manager-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:8000}
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped

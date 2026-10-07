@@ -1,0 +1,53 @@
+{
+  "realm": "nar-manager",
+  "enabled": true,
+  "clients": [
+    {
+      "clientId": "nar-manager-frontend",
+      "enabled": true,
+      "publicClient": false,
+      "secret": "nar-manager-secret",
+      "redirectUris": ["http://localhost:3000/*", "http://localhost:8000/*"],
+      "webOrigins": ["http://localhost:3000"],
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": true,
+      "protocol": "openid-connect"
+    }
+  ],
+  "roles": {
+    "realm": [
+      { "name": "nar-admin", "description": "Full access to NAR Manager" },
+      { "name": "nar-developer", "description": "Upload, deploy and download NAR bundles" },
+      { "name": "nar-viewer", "description": "Browse and download only" }
+    ]
+  },
+  "users": [
+    {
+      "username": "admin",
+      "enabled": true,
+      "firstName": "NAR",
+      "lastName": "Administrator",
+      "email": "admin@example.com",
+      "credentials": [{ "type": "password", "value": "admin123", "temporary": false }],
+      "realmRoles": ["nar-admin"]
+    },
+    {
+      "username": "developer",
+      "enabled": true,
+      "firstName": "Demo",
+      "lastName": "Developer",
+      "email": "developer@example.com",
+      "credentials": [{ "type": "password", "value": "developer123", "temporary": false }],
+      "realmRoles": ["nar-developer"]
+    },
+    {
+      "username": "viewer",
+      "enabled": true,
+      "firstName": "Demo",
+      "lastName": "Viewer",
+      "email": "viewer@example.com",
+      "credentials": [{ "type": "password", "value": "viewer123", "temporary": false }],
+      "realmRoles": ["nar-viewer"]
+    }
+  ]
+}

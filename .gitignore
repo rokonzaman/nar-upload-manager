@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+*.egg-info/
+
+# App runtime data
+nar-data/
+ssh-key/id_ansible
+*.db
+.env
+.env.local
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+npm-debug.log*
+
+# IDE / OS
+.DS_Store
+.idea/
+.vscode/
+
+# Docker
+*.tar
+
+# GitHub (using GitLab)
+.github/
